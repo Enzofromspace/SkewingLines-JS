@@ -21,27 +21,35 @@ const sketch = () => {
 
     context.save();
     context.translate(x, y);
-   // context.translate(w * -0.5, h * -0.5);
-
-   angle = math.degToRad(45); 
-   rx = Math.cos(angle) * w;
-   ry = Math.sin(angle) * w; 
+    context.strokeStyle = `blue`;
    
-   context.strokeStyle = `blue`;
-
-   context.translate(rx * -0.5, (ry + h ) * -0.5);
-    
-    context.beginPath();
-    context.moveTo(0,0);
-    context.lineTo(rx,ry);
-    context.lineTo(rx, ry + h);
-    context.lineTo(0,h);
-    context.closePath();
-    context.stroke();  
+    drawSkewedRect({context});
+    context.stroke();
 
 
     context.restore();
+
   };
 };
+
+//created a function to draw rectangles
+const drawSkewedRect = ({context, w = 600, h = 200, degrees = -45}) => {
+  const angle = math.degToRad(degrees); 
+  const rx = Math.cos(angle) * w;
+  const ry = Math.sin(angle) * w; 
+
+  context.save();
+  context.translate(rx * -0.5, (ry + h ) * -0.5);
+   
+   context.beginPath();
+   context.moveTo(0,0);
+   context.lineTo(rx,ry);
+   context.lineTo(rx, ry + h);
+   context.lineTo(0,h);
+   context.closePath();
+   context.stroke();
+
+   context.restore();
+}
 
 canvasSketch(sketch, settings);
