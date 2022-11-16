@@ -7,6 +7,7 @@ const settings = {
 
 const sketch = () => {
   let x, y, w, h;
+  let angle, rx, ry;
 
   //render function
   return ({ context, width, height }) => {
@@ -20,18 +21,24 @@ const sketch = () => {
 
     context.save();
     context.translate(x, y);
-    context.translate(w * -0.5, h * -0.5);
+   // context.translate(w * -0.5, h * -0.5);
 
-    context.strokeStyle = `blue`;
-    //context.strokeRect(x * -0.5, y * -0.5, w, h);
+   angle = math.degToRad(45); 
+   rx = Math.cos(angle) * w;
+   ry = Math.sin(angle) * w; 
+   
+   context.strokeStyle = `blue`;
 
+   context.translate(rx * -0.5, (ry + h ) * -0.5);
+    
     context.beginPath();
     context.moveTo(0,0);
-    context.lineTo(w,0);
-    context.lineTo(w,h);
+    context.lineTo(rx,ry);
+    context.lineTo(rx, ry + h);
     context.lineTo(0,h);
     context.closePath();
-    context.stroke();
+    context.stroke();  
+
 
     context.restore();
   };
