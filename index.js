@@ -23,6 +23,8 @@ const rectColors = [
   random.pick(risoColors),
 ];
 
+const bgColor = random.pick(risoColors).hex;
+
 // for loop set that runs according to the value of const num  
   for (let i = 0; i < num; i++) {
       x = random.range(0, width);
@@ -38,7 +40,7 @@ const rectColors = [
 
   //render function
   return ({ context, width, height }) => {
-    context.fillStyle = 'white';
+    context.fillStyle = bgColor;
     context.fillRect(0, 0, width, height);
 
 //set function of the array with for each
@@ -51,6 +53,7 @@ const rectColors = [
       context.translate(x, y);
       context.strokeStyle = stroke;
       context.fillStyle = fill;
+      context.lineWidth = 10;
     
       drawSkewedRect({context, w, h, degrees});
       context.stroke();
@@ -59,9 +62,9 @@ const rectColors = [
 
       context.restore();
   
-    
     });
     
+    console.log(drawSkewedRect);
   };
 };
 
