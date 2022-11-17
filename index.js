@@ -11,7 +11,7 @@ const settings = {
 const sketch = ({ context, width, height }) => {
   let x, y, w, h, fill, stroke, blend;
   //set number of rectangles and angle 
-  const num = 22;
+  const num = 33;
   const degrees = -25;
 
  // creat array to store random output
@@ -30,7 +30,7 @@ const bgColor = random.pick(risoColors).hex;
   for (let i = 0; i < num; i++) {
       x = random.range(0, width);
       y = random.range(0, height);
-      w = random.range(200,600);
+      w = random.range(600,width);
       h = random.range(40,200);
 
       fill = random.pick(rectColors).hex;
