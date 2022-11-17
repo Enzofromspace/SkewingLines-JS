@@ -53,11 +53,18 @@ const bgColor = random.pick(risoColors).hex;
       context.translate(x, y);
       context.strokeStyle = stroke;
       context.fillStyle = fill;
-      context.lineWidth = 10;
+      context.lineWidth = 15;
     
       drawSkewedRect({context, w, h, degrees});
-      context.stroke();
+      
+      context.shadowColor = 'black';
+      context.shadowOffsetX = -10;
+      context.shadowOffsetY = 20;
+      
       context.fill();
+
+      context.shadowColor = null;
+      context.stroke();
 
 
       context.restore();
