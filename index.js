@@ -1,6 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 const math = require('canvas-sketch-util/math');
 const random = require('canvas-sketch-util/random');
+const Color = require('canvas-sketch-util/color');
 const risoColors = require('riso-colors');
 
 const settings = {
@@ -8,7 +9,7 @@ const settings = {
 };
 //declare params from array inside sketch function
 const sketch = ({ context, width, height }) => {
-  let x, y, w, h, fill, stroke;
+  let x, y, w, h, fill, stroke, blend;
   //set number of rectangles and angle 
   const num = 22;
   const degrees = -25;
@@ -34,8 +35,10 @@ const bgColor = random.pick(risoColors).hex;
 
       fill = random.pick(rectColors).hex;
       stroke = random.pick(rectColors).hex;
+
+      blend = (random.value() > 0.5) ? 'overlay' : 'source-over';
 //push into array
-      rects.push({ x, y, w, h, fill, stroke });
+      rects.push({ x, y, w, h, fill, stroke, blend });
   }
 
   //render function
@@ -47,17 +50,23 @@ const bgColor = random.pick(risoColors).hex;
     rects.forEach(rect =>{
 
 // destructure   
-      const {x, y, w, h, fill, stroke} = rect;
+      const {x, y, w, h, fill, stroke, blend} = rect;
+      let shadowColor;
 
       context.save();
       context.translate(x, y);
       context.strokeStyle = stroke;
       context.fillStyle = fill;
       context.lineWidth = 15;
+
+      context.globalCommpositeOperation = blend;
     
       drawSkewedRect({context, w, h, degrees});
       
-      context.shadowColor = 'black';
+      shadowColor = Color.offsetHSL(fill, 0, 0,-20);
+      shadowColor.rgba[3] = 0.5;
+
+      context.shadowColor = Color.style(shadowColor.rgba);
       context.shadowOffsetX = -10;
       context.shadowOffsetY = 20;
       
@@ -66,6 +75,11 @@ const bgColor = random.pick(risoColors).hex;
       context.shadowColor = null;
       context.stroke();
 
+      context.globalCommpositeOperation = 'source-over';
+
+      context.lineWidth = 2;
+      context.strokeStyle = 'black';
+      context.stroke();
 
       context.restore();
   
