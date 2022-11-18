@@ -49,7 +49,7 @@ const bgColor = random.pick(risoColors).hex;
     context.save();
     context.translate(width * 0.5, height * 0.5);
     
-    drawPolygon({context, radius: 400, sides: 3 });
+    drawPolygon({context, radius: 400, sides: 6 });
     
     context.lineWidth = 50;
     context.strokeStyle = random.pick(risoColors).hex;
