@@ -26,6 +26,13 @@ const rectColors = [
 
 const bgColor = random.pick(risoColors).hex;
 
+const mask = {
+  radius: width * 0.4,
+  sides: 3,
+  x: width * 0.5,
+  y: height * 0.58,
+};
+
 // for loop set that runs according to the value of const num 
   for (let i = 0; i < num; i++) {
       x = random.range(0, width);
@@ -47,13 +54,10 @@ const bgColor = random.pick(risoColors).hex;
     context.fillRect(0, 0, width, height);
     
     context.save();
-    context.translate(width * 0.5, height * 0.5);
+    context.translate(mask.x, mask.y);
     
-    drawPolygon({context, radius: 400, sides: 6 });
+    drawPolygon({context, radius: mask.radius, sides: mask.sides });
     
-    context.lineWidth = 50;
-    context.strokeStyle = random.pick(risoColors).hex;
-    context.stroke();
     context.clip();
 //set function of the array with for each
     rects.forEach(rect =>{
@@ -63,7 +67,7 @@ const bgColor = random.pick(risoColors).hex;
       let shadowColor;
 
       context.save();
-      context.translate(width * -0.5, height * -0.5);
+      context.translate(-mask.x, -mask.y);
       context.translate(x, y);
       context.strokeStyle = stroke;
       context.fillStyle = fill;
@@ -95,6 +99,17 @@ const bgColor = random.pick(risoColors).hex;
   
     });
      
+      context.restore();
+//
+      context.save();
+      context.translate(mask.x, mask.y);
+
+      drawPolygon({context, radius: mask.radius, sides: mask.sides });
+
+      context.lineWidth = 30;
+      context.strokeStyle = 'black';
+      context.stroke();
+
       context.restore();
    // console.log(drawSkewedRect);
   };
