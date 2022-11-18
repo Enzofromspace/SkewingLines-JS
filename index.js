@@ -91,7 +91,7 @@ const mask = {
 
       context.globalCommpositeOperation = 'source-over';
 
-      context.lineWidth = 3;
+      context.lineWidth = 5;
       context.strokeStyle = 'black';
       context.stroke();
 
@@ -100,14 +100,15 @@ const mask = {
     });
      
       context.restore();
-//
+
       context.save();
       context.translate(mask.x, mask.y);
-
-      drawPolygon({context, radius: mask.radius, sides: mask.sides });
-
       context.lineWidth = 30;
-      context.strokeStyle = 'black';
+
+      drawPolygon({context, radius: mask.radius - context.lineWidth, sides: mask.sides });
+
+      context.globalCompositeOperation = 'color-burn';
+      context.strokeStyle = random.pick(risoColors).hex;
       context.stroke();
 
       context.restore();
