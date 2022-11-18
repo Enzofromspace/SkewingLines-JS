@@ -26,7 +26,7 @@ const rectColors = [
 
 const bgColor = random.pick(risoColors).hex;
 
-// for loop set that runs according to the value of const num  
+// for loop set that runs according to the value of const num 
   for (let i = 0; i < num; i++) {
       x = random.range(0, width);
       y = random.range(0, height);
@@ -45,7 +45,20 @@ const bgColor = random.pick(risoColors).hex;
   return ({ context, width, height }) => {
     context.fillStyle = bgColor;
     context.fillRect(0, 0, width, height);
-
+    
+    context.save();
+    context.translate(width * 0.5, height * 0.5);
+    
+    context.beginPath();
+    context.moveTo(0,-300);
+    context.lineTo(300,200);
+    context.lineTo(-300,200);
+    context.closePath();
+    
+    context.lineWidth = 10;
+    context.strokeStyle - 'black';
+    context.stroke();
+    context.clip();
 //set function of the array with for each
     rects.forEach(rect =>{
 
@@ -54,6 +67,7 @@ const bgColor = random.pick(risoColors).hex;
       let shadowColor;
 
       context.save();
+      context.translate(width * -0.5, height * -0.5);
       context.translate(x, y);
       context.strokeStyle = stroke;
       context.fillStyle = fill;
@@ -84,8 +98,11 @@ const bgColor = random.pick(risoColors).hex;
       context.restore();
   
     });
-    
-    console.log(drawSkewedRect);
+      //start a triangle drawing for a clipping mask
+
+
+      context.restore();
+   // console.log(drawSkewedRect);
   };
 };
 
