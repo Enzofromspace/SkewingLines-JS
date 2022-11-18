@@ -49,14 +49,10 @@ const bgColor = random.pick(risoColors).hex;
     context.save();
     context.translate(width * 0.5, height * 0.5);
     
-    context.beginPath();
-    context.moveTo(0,-300);
-    context.lineTo(300,200);
-    context.lineTo(-300,200);
-    context.closePath();
+    drawPolygon({context, radius: 400, sides: 3 });
     
-    context.lineWidth = 10;
-    context.strokeStyle - 'black';
+    context.lineWidth = 50;
+    context.strokeStyle = random.pick(risoColors).hex;
     context.stroke();
     context.clip();
 //set function of the array with for each
@@ -91,16 +87,14 @@ const bgColor = random.pick(risoColors).hex;
 
       context.globalCommpositeOperation = 'source-over';
 
-      context.lineWidth = 2;
+      context.lineWidth = 3;
       context.strokeStyle = 'black';
       context.stroke();
 
       context.restore();
   
     });
-      //start a triangle drawing for a clipping mask
-
-
+     
       context.restore();
    // console.log(drawSkewedRect);
   };
@@ -121,9 +115,24 @@ const drawSkewedRect = ({context, w = 600, h = 200, degrees = -45}) => {
    context.lineTo(rx, ry + h);
    context.lineTo(0,h);
    context.closePath();
-   context.stroke();
+  // context.stroke();
 
    context.restore();
-}
+};
+
+const drawPolygon = ({context, radius = 100, sides = 3 }) => {
+  const slice = Math.PI * 2 / sides;
+  
+  context.beginPath();
+  context.moveTo(0, -radius);
+  
+  for(let i = 1; i < sides; i++){
+    const theta = i * slice - Math.PI * 0.5;
+    context.lineTo(Math.cos(theta) * radius, Math.sin(theta) * radius);    
+  }
+  
+  context.closePath();
+
+};
 
 canvasSketch(sketch, settings);
